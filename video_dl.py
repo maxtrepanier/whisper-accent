@@ -60,7 +60,7 @@ def download_audio(video_dict: dict, accent: str) -> None:
                 to_download_urls.append(url)
 
     print(f"{accent}: downloading {len(to_download_urls)} files")
-    for url in tqdm(to_download_urls[:1]):
+    for url in tqdm(to_download_urls):
         output_name = get_database_name(accent, url)
         command = f'yt-dlp -o {output_name} -x --audio-format mp3 --postprocessor-args "-ac 1 -ar 16000" {url}'
         process = subprocess.Popen(command, shell=True,
@@ -68,6 +68,8 @@ def download_audio(video_dict: dict, accent: str) -> None:
                                    stderr=subprocess.PIPE
                                    )
         stdout, stderr = process.communicate()
+
+    print("Done.\n")
 
 def process_audio(accent: str):
     """ Process audio files for given accent.
@@ -95,7 +97,7 @@ def process_audio(accent: str):
     else:
         print("All files processed, nothing to do.")
 
-    for file_name in files_to_process:
+    for file_name in tqdm(files_to_process):
         path = dir_name + '/' + file_name
         duration = librosa.get_duration(path=path)
         offsets = select_samples_offsets(duration)
