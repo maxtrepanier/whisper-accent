@@ -35,8 +35,21 @@ def select_samples_offsets(duration: int,
 def get_database_name(accent, url):
     return DIR_DATABASE + accent + '/' + url.replace("https://www.youtube.com/watch?v=", "") + ".mp3"
 
-def download_audio(accent: str, video_dict: dict) -> None:
+def download_audio(video_dict: dict, accent: str) -> None:
     """ Download audio tracks from video_dict using yt-dlp.
+
+    video_dict is a dictionary with the structure
+    {accent: {category: [url1, url2, ...]}}
+    The function processes only the given accent.
+
+    The audio tracks are extracted from the given url, converted to mono channel
+    and resampled at 16kHz. They are stored in DIR_DATABASE/accent.
+
+    Args:
+    video_dict: dictionary containing urls to download
+    accent: key of video_dict to process
+
+    Returns: None
     """
     to_download_urls = []
 
@@ -56,13 +69,19 @@ def download_audio(accent: str, video_dict: dict) -> None:
                                    )
         stdout, stderr = process.communicate()
 
-def process_audio(accent):
-    """ Process audio files into 30s segments
+def process_audio(accent: str):
+    """ Process audio files for given accent.
+    For each file in DIR_DATABASE/accent, selects random segments of 30s from
+    the audio track, and outputs the segments to DIR_DATASET/accent.
+
+    Args:
+    accent: name of directory in DIR_DATABASE containing audio files
+    Returns: None
     """
 
     dir_name = DIR_DATABASE + accent
-    files_database = os.listdir(dir_name)
-    print(f"{accent}: found {len(files_database)} files in {dir_name}")
+    files_database = [f for f in os.listdir(dir_name) if f[-4:] == ".mp3"]
+    print(f"{accent}: found {len(files_database)} mp3 files in {dir_name}")
 
     dir_name_out = DIR_DATASET + accent
     files_dataset = os.listdir(dir_name_out)
@@ -98,5 +117,5 @@ if __name__ == "__main__":
     accent_list = video_dict.keys()
 
     for accent in accent_list:
-        download_audio(accent, video_dict)
+        download_audio(video_dict, accent)
         process_audio(accent)
