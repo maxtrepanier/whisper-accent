@@ -107,8 +107,9 @@ def process_audio(accent: str):
             path_out = dir_name_out + '/' + file_name.replace(".mp3", f"_{i}.mp3")
             sf.write(path_out, audio, int(sr), format='mp3')
 
+    print("Done.\n")
+
 if __name__ == "__main__":
-    # Download files
     DIR_DATABASE = 'database/'
     DIR_DATASET = 'dataset/'
 
