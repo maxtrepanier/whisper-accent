@@ -43,7 +43,6 @@ def download_audio(accent: str, video_dict: dict) -> None:
     # list files to download
     for category in video_dict[accent]:
         for url in video_dict[accent][category]:
-            print(get_database_name(accent, url))
             if not os.path.isfile(get_database_name(accent, url)):
                 to_download_urls.append(url)
 
@@ -72,10 +71,13 @@ def process_audio(accent):
     files_to_process = [file for file in files_database
                         if file[:11] not in files_dataset]
 
-    print(f"{len(files_to_process)} files to process")
+    if len(files_to_process) > 0:
+        print(f"{len(files_to_process)} files to process")
+    else:
+        print("All files processed, nothing to do.")
 
     for file_name in files_to_process:
-        path = DIR_DATABASE + file_name
+        path = dir_name + '/' + file_name
         duration = librosa.get_duration(path=path)
         offsets = select_samples_offsets(duration)
         for i, offset in enumerate(offsets):
@@ -97,4 +99,4 @@ if __name__ == "__main__":
 
     for accent in accent_list:
         download_audio(accent, video_dict)
-#         process_audio(accent)
+        process_audio(accent)
