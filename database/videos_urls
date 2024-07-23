@@ -1,0 +1,108 @@
+{
+"american":
+{
+    "Talk shows": [
+    "https://www.youtube.com/watch?v=0ti98bgCNT0",
+    "https://www.youtube.com/watch?v=iqv_kCAAd30",
+    "https://www.youtube.com/watch?v=oXOmmjt9ARQ",
+    "https://www.youtube.com/watch?v=jSoXp6wHNk8",
+    "https://www.youtube.com/watch?v=vwGNlk8R5Ng",
+    "https://www.youtube.com/watch?v=gLi2WiS7rRM",
+    "https://www.youtube.com/watch?v=Nr56f6sCKtQ"
+    ],
+
+    "Obama": [
+    "https://www.youtube.com/watch?v=MS5UjNKw_1M"
+    ],
+
+    "News": [
+    "https://www.youtube.com/watch?v=ZMrtZrqOLhY",
+    "https://www.youtube.com/watch?v=pABCdQ0IvMM",
+    "https://www.youtube.com/watch?v=D9P196Fm0lM",
+    "https://www.youtube.com/watch?v=RATHbP1bAhI",
+    "https://www.youtube.com/watch?v=SGXRMlPL3XI",
+    "https://www.youtube.com/watch?v=vzjeG5MaAfM",
+    "https://www.youtube.com/watch?v=_PU_1aUwASM"
+    ],
+
+    "Youtubers": [
+    "https://www.youtube.com/watch?v=tWxh2oS7Ays",
+    "https://www.youtube.com/watch?v=X7greYgsJAo",
+    "https://www.youtube.com/watch?v=ysJst3MThKI",
+    "https://www.youtube.com/watch?v=OxGsU8oIWjY",
+    "https://www.youtube.com/watch?v=iGCIqj0SlEs",
+    "https://www.youtube.com/watch?v=G76L5lSM8Hg"
+    ],
+
+    "Physicists": [
+    "https://www.youtube.com/watch?v=36GT2zI8lVA",
+    "https://www.youtube.com/watch?v=bKapdscHwJ0"
+    ],
+
+    "Audiobook": [
+    "https://www.youtube.com/watch?v=KouI6kNuXwo",
+    "https://www.youtube.com/watch?v=DORQDlDL1oY"
+    ],
+
+    "Accent videos": [
+    "https://www.youtube.com/watch?v=IzyTLJWNkas",
+    "https://www.youtube.com/watch?v=yc47FqB3Cw8"
+    ],
+
+    "TV": [
+    "https://www.youtube.com/watch?v=o739b8h6wjY",
+    "https://www.youtube.com/watch?v=SpCFbRrC3No"
+    ]
+},
+"british":
+{
+    "News": [
+    "https://www.youtube.com/watch?v=ynXGaCaIAcQ",
+    "https://www.youtube.com/watch?v=RhGxIuQJX3Q",
+    "https://www.youtube.com/watch?v=4EfiV4664ho",
+    "https://www.youtube.com/watch?v=kvVs_2RYa2g",
+    "https://www.youtube.com/watch?v=QcfC3HqSYs8"
+    ],
+
+    "Royal": [
+    "https://www.youtube.com/watch?v=pQapy3zViB0"
+    ],
+
+    "Talk shows": [
+    "https://www.youtube.com/watch?v=_wbS_todg9w",
+    "https://www.youtube.com/watch?v=7gio-kn56Wk",
+    "https://www.youtube.com/watch?v=Il72uEjs4o0",
+    "https://www.youtube.com/watch?v=1Q9F2-Se0Ss"
+    ],
+
+    "TV": [
+    "https://www.youtube.com/watch?v=aBWblQKr6oU",
+    "https://www.youtube.com/watch?v=jwYSi_kLs5Q",
+    "https://www.youtube.com/watch?v=0zky4p5HBYE",
+    "https://www.youtube.com/watch?v=4Bsh9KgYb7E",
+    "https://www.youtube.com/watch?v=jj5_EVbRk_4",
+    "https://www.youtube.com/watch?v=b15-P12gIf0",
+    "https://www.youtube.com/watch?v=ZJBM6qs22sE"
+    ],
+
+    "Audiobook": [
+    "https://www.youtube.com/watch?v=hQrM6hxaeHo"
+    ],
+
+    "Physicists": [
+    "https://www.youtube.com/watch?v=rlaPLvETBug",
+    "https://www.youtube.com/watch?v=YnXUuyfPK2A",
+    "https://www.youtube.com/watch?v=fcfQkxwz4Oo",
+    "https://www.youtube.com/watch?v=57AzwH0Q6lA"
+    ],
+
+    "Youtubers": [
+    "https://www.youtube.com/watch?v=3nB688xBYdY",
+    "https://www.youtube.com/watch?v=WpOKeCtju3w"
+    ],
+
+    "Accent": [
+    "https://www.youtube.com/watch?v=ZeJM7QmufO8"
+    ]
+}
+}
