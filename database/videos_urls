@@ -8,11 +8,14 @@
     "https://www.youtube.com/watch?v=jSoXp6wHNk8",
     "https://www.youtube.com/watch?v=vwGNlk8R5Ng",
     "https://www.youtube.com/watch?v=gLi2WiS7rRM",
-    "https://www.youtube.com/watch?v=Nr56f6sCKtQ"
+    "https://www.youtube.com/watch?v=Nr56f6sCKtQ",
+    "https://www.youtube.com/watch?v=f5NJQiY9AuY",
+    "https://www.youtube.com/watch?v=on4bHNdUm-I"
     ],
 
-    "Obama": [
-    "https://www.youtube.com/watch?v=MS5UjNKw_1M"
+    "Presidents": [
+    "https://www.youtube.com/watch?v=MS5UjNKw_1M",
+    "https://www.youtube.com/watch?v=3VilWuY_ZYs"
     ],
 
     "News": [
@@ -22,7 +25,8 @@
     "https://www.youtube.com/watch?v=RATHbP1bAhI",
     "https://www.youtube.com/watch?v=SGXRMlPL3XI",
     "https://www.youtube.com/watch?v=vzjeG5MaAfM",
-    "https://www.youtube.com/watch?v=_PU_1aUwASM"
+    "https://www.youtube.com/watch?v=_PU_1aUwASM",
+    "https://www.youtube.com/watch?v=erjhZxwf7cc"
     ],
 
     "Youtubers": [
@@ -31,7 +35,9 @@
     "https://www.youtube.com/watch?v=ysJst3MThKI",
     "https://www.youtube.com/watch?v=OxGsU8oIWjY",
     "https://www.youtube.com/watch?v=iGCIqj0SlEs",
-    "https://www.youtube.com/watch?v=G76L5lSM8Hg"
+    "https://www.youtube.com/watch?v=G76L5lSM8Hg",
+    "https://www.youtube.com/watch?v=3V0TUf-0ZWc",
+    "https://www.youtube.com/watch?v=50y0uVmw8f0"
     ],
 
     "Physicists": [
@@ -52,6 +58,17 @@
     "TV": [
     "https://www.youtube.com/watch?v=o739b8h6wjY",
     "https://www.youtube.com/watch?v=SpCFbRrC3No"
+    ],
+
+    "Interviews": [
+    "https://www.youtube.com/watch?v=GLKoDkbS1Cg",
+    "https://www.youtube.com/watch?v=jrTYdOEaiy0",
+    "https://www.youtube.com/watch?v=1i9kcBHX2Nw"
+    ],
+
+    "Letters live": [
+    "https://www.youtube.com/watch?v=PvUb9XjCg88",
+    "https://www.youtube.com/watch?v=dl3xNpeOkE0"
     ]
 },
 "british":
@@ -61,7 +78,8 @@
     "https://www.youtube.com/watch?v=RhGxIuQJX3Q",
     "https://www.youtube.com/watch?v=4EfiV4664ho",
     "https://www.youtube.com/watch?v=kvVs_2RYa2g",
-    "https://www.youtube.com/watch?v=QcfC3HqSYs8"
+    "https://www.youtube.com/watch?v=QcfC3HqSYs8",
+    "https://www.youtube.com/watch?v=kAf-lx6YQZY"
     ],
 
     "Royal": [
@@ -72,7 +90,11 @@
     "https://www.youtube.com/watch?v=_wbS_todg9w",
     "https://www.youtube.com/watch?v=7gio-kn56Wk",
     "https://www.youtube.com/watch?v=Il72uEjs4o0",
-    "https://www.youtube.com/watch?v=1Q9F2-Se0Ss"
+    "https://www.youtube.com/watch?v=1Q9F2-Se0Ss",
+    "https://www.youtube.com/watch?v=0ThPghBFGzM",
+    "https://www.youtube.com/watch?v=detAlTL9sbM",
+    "https://www.youtube.com/watch?v=ZSZSPhSCtHo",
+    "https://www.youtube.com/watch?v=idMn_1gcVFs"
     ],
 
     "TV": [
@@ -82,27 +104,50 @@
     "https://www.youtube.com/watch?v=4Bsh9KgYb7E",
     "https://www.youtube.com/watch?v=jj5_EVbRk_4",
     "https://www.youtube.com/watch?v=b15-P12gIf0",
-    "https://www.youtube.com/watch?v=ZJBM6qs22sE"
+    "https://www.youtube.com/watch?v=ZJBM6qs22sE",
+    "https://www.youtube.com/watch?v=nKN-VK0B-18",
+    "https://www.youtube.com/watch?v=yywktzpmLsU",
+    "https://www.youtube.com/watch?v=MI78WOW_u-Q",
+    "https://www.youtube.com/watch?v=ODkk4kmlX2s"
     ],
 
     "Audiobook": [
-    "https://www.youtube.com/watch?v=hQrM6hxaeHo"
+    "https://www.youtube.com/watch?v=hQrM6hxaeHo",
+    "https://www.youtube.com/watch?v=wb32c3OnVn0"
     ],
 
     "Physicists": [
     "https://www.youtube.com/watch?v=rlaPLvETBug",
     "https://www.youtube.com/watch?v=YnXUuyfPK2A",
     "https://www.youtube.com/watch?v=fcfQkxwz4Oo",
-    "https://www.youtube.com/watch?v=57AzwH0Q6lA"
+    "https://www.youtube.com/watch?v=57AzwH0Q6lA",
+    "https://www.youtube.com/watch?v=uQSoaiubuA0"
     ],
 
     "Youtubers": [
     "https://www.youtube.com/watch?v=3nB688xBYdY",
-    "https://www.youtube.com/watch?v=WpOKeCtju3w"
+    "https://www.youtube.com/watch?v=WpOKeCtju3w",
+    "https://www.youtube.com/watch?v=2tdiKTSdE9Y",
+    "https://www.youtube.com/watch?v=7DKv5H5Frt0",
+    "https://www.youtube.com/watch?v=kXbFTpEfIH4",
+    "https://www.youtube.com/watch?v=beakj767uG4"
     ],
 
     "Accent": [
     "https://www.youtube.com/watch?v=ZeJM7QmufO8"
+    ],
+
+    "Interview": [
+    "https://www.youtube.com/watch?v=GnDzh-MeX6M",
+    "https://www.youtube.com/watch?v=PW3tLBp4L6Q"
+    ]
+
+    "Letters live": [
+    "https://www.youtube.com/watch?v=Fh9tMqpH8nc",
+    "https://www.youtube.com/watch?v=25qEVGqPwLk",
+    "https://www.youtube.com/watch?v=0aL6JhDvqV4",
+    "https://www.youtube.com/watch?v=dkw7VdYQzuE",
+    "https://www.youtube.com/watch?v=ENJXifwwWis"
     ]
 }
 }

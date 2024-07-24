@@ -11,21 +11,25 @@ from typing import List
 
 def select_samples_offsets(duration: int,
                            duration_sample: int = 30,
-                           min_separation=25,
+                           min_separation: int = 25,
+                           alpha : float = 0.5,
                            sr: int = 16e3) -> List[int]:
     """ Select random samples (of duration_sample) from an audio track of given
     duration. The samples are separated by at least min_separation seconds.
+    The parameter alpha controls how the number of samples drawn from a track
+    scales with the duration of the track (recommended 0.5 < alpha < 1)
 
     Args:
     duration: total duration of the track (in seconds)
     duration_sample: duration of a single sample (default 30s)
     min_separation: minimal separation between samples (default 25)
+    alpha: controls the number of samples
     sr: sampling rate, default 16000
 
     Returns:
     list of starting time (in samples unit)
     """
-    approx_nb_samples = int((duration / duration_sample) ** 0.5) + 1
+    approx_nb_samples = int((duration / duration_sample) ** alpha) + 1
     samples = np.random.randint(low=0, high=(duration - duration_sample) * sr, size=(approx_nb_samples))
     samples = np.sort(samples)
     # overlap if less than min_separation apart
