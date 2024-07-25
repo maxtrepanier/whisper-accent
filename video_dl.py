@@ -1,16 +1,52 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+""" Builds an audio dataset by fetching videos from given urls, extracting audio
+clips of given duration, and performing a train-test split.
+"""
+
+__author__  = "Maxime Trepanier"
+
+# I/O
 import json
 import os
 import subprocess
 from tqdm import tqdm
 
+# Processing
 import re
 import random
 
+# Sound processing
 import numpy as np
 import librosa
 import soundfile as sf
 
+# Python file
 from typing import List, Dict
+
+def get_database_name(dir_name: str, url: str) -> str:
+    """ Returns file name by removing youtube url prefix and appending file
+    extension.
+
+    Args:
+    - dir_name: name of the directory in which the file is located
+    - url: url address to download
+    Returns:
+    - file name (including path)
+    """
+    if dir_name[-1] != '/':
+        dir_name += '/'
+    return dir_name + url.replace("https://www.youtube.com/watch?v=", "") + ".mp3"
+
+def get_name_from_sample(sample_name):
+    """ Returns sample_name without the postfix _{i}.mp3.
+    """
+    sample_postfix = re.search("_\d+\.mp3", sample_name)
+    if sample_postfix is None:
+        raise ValueError(f"Cannot process {sample_name}, wrong format.")
+    name = sample_name[:sample_postfix.start()]
+    return name
 
 def select_samples_offsets(duration: int,
                            duration_sample: int = 30,
@@ -37,10 +73,7 @@ def select_samples_offsets(duration: int,
     samples = np.sort(samples)
     # overlap if less than min_separation apart
     overlapping = np.concatenate(([False], (samples[1:] - samples[:-1]) < min_separation * sr))
-    return samples[~overlapping]  # remove overlapping samples
-
-def get_database_name(path, url):
-    return path + url.replace("https://www.youtube.com/watch?v=", "") + ".mp3"
+    return samples[~overlapping]  # drop overlapping samples
 
 def download_audio(video_dict: dict, accent: str) -> None:
     """ Download audio tracks from video_dict using yt-dlp.
@@ -82,13 +115,18 @@ def download_audio(video_dict: dict, accent: str) -> None:
 
     print("Done.\n")
 
-def process_audio(accent: str, min_separation=30, alpha=0.5):
+def process_audio(accent: str, min_separation:float = 30, alpha: float = 0.5):
     """ Process audio files for given accent.
-    For each file in DIR_DATABASE/accent, selects random segments of 30s from
-    the audio track, and outputs the segments to DIR_DATASET/accent.
+    For each file in DIR_DATABASE/accent, selects random segments of
+    min_separation (default 30s) from the audio track, and outputs the segments
+    to DIR_DATASET/accent.
 
     Args:
-    accent: name of directory in DIR_DATABASE containing audio files
+    - accent: name of directory in DIR_DATABASE containing audio files
+    - min_separation: minimum separation (in seconds) between the beginning of
+      different samples
+    - alpha: controls the density of samples, see select_samples_offsets for
+      more details.
     Returns: None
     """
 
@@ -128,25 +166,36 @@ def process_audio(accent: str, min_separation=30, alpha=0.5):
 
     print("Done.\n")
 
-def get_name_from_sample(sample_name):
-    sample_postfix = re.search("_\d+\.mp3", sample_name)
-    if sample_postfix is None:
-        raise ValueError(f"Cannot process {sample_name}")
-    name = sample_name[:sample_postfix.start()]
-    return name
-
 class File:
-    def __init__(self, dir_name, name):
+    """ Container class for an audio track and its samples.
+    """
+    def __init__(self, dir_name: str, name: str) -> None:
+        """ Create a new container for a file with [name] in [dir_name].
+        Args:
+         - dir_name: name of the directory where the file is located
+         - name: name of the file
+        """
         self.name = name
         self.dir_name = dir_name
-        self.samples = []
+        self.samples = []  # holds name of samples
 
-    def add_sample(self, sample_name):
+    def add_sample(self, sample_name: str):
+        """ Links a sample with name [sample_name] (assumed in [dir_name]) to
+        the file.
+
+        Args:
+         - sample_name: name of the sample
+        """
         self.samples.append(sample_name)
 
     def nb_samples(self): return len(self.samples)
 
-    def get_samples_path(self):
+    def get_samples_path(self) -> [str, str]:
+        """ Returns a list of samples and their path.
+
+        Returns:
+         - list [(sample_name, sample_path)] of all samples
+        """
         samples_path = [(f, self.dir_name + '/' + f) for f in self.samples]
         return samples_path
 
@@ -158,6 +207,16 @@ class File:
 
 
 def get_dataset_dict(dir_name: str, files_dataset: List[str]) -> Dict[str, File]:
+    """ Builds a dataset dictionary from a list of files located in directory
+    [dir_name].
+
+    Args:
+     - dir_name: name of the directory
+     - files_dataset: list of files within dir_name to process
+    Returns:
+     - dict: keys are file names, values are File objects containing samples.
+    """
+
     dataset = {}
     for file in files_dataset:
         file_name = get_name_from_sample(file)
@@ -168,10 +227,11 @@ def get_dataset_dict(dir_name: str, files_dataset: List[str]) -> Dict[str, File]
 
     return dataset
 
-def train_test_split(accent, test=0.15):
-    """ Divides audio samples into train/test with given ratio.
+def train_test_split(accent, test_ratio: float = 0.15, tol: float = 0.02):
+    """ Divides audio samples into train/test with given ratio of test samples.
     """
 
+    # retrieve file list in base + assigned directories
     dir_name_base = DIR_DATASET + accent
     dir_name_assigned = [dir_name_base + '/' + d for d in DIR_SETS]
 
@@ -193,31 +253,34 @@ def train_test_split(accent, test=0.15):
         print(f"  - {nb_files_assigned[d]} in {d}")
     print("")
 
+    # check ratios of test samples
     resplit = False
     if nb_files_unassigned > 0:
         resplit = True
     elif nb_total_files > 0:
-        # if assigned already, check if within 2% of target
-        if abs(nb_files_assigned[dir_name_assigned[1]] / nb_total_files - test) > 0.02:
+        # if assigned already, check if within tol of target
+        if abs(nb_files_assigned[dir_name_assigned[1]] / nb_total_files -
+                test_ratio) > tol:
             resplit = True
 
     if not resplit:
-        print(f"Train-test split already done, within 2% of target {test}. Nothing to do.\n")
+        print(f"Train-test split already done, within {tol*100}% of target {test}. Nothing to do.\n")
 
     dataset = get_dataset_dict(dir_name_base, files_dataset_base)
     # merge assigned file to dataset
     for d in dir_name_assigned:
         dataset = dataset | get_dataset_dict(d, files_dataset_assigned[d])
 
-    target_test = test * nb_total_files
-    error_margin = 0.02 * nb_total_files
+    # assign test files using greedy approach
+    target_test = test_ratio * nb_total_files
+    error_margin = tol * nb_total_files
     shuffle_files = list(dataset.keys())
-    random.shuffle(shuffle_files)
+    random.shuffle(shuffle_files)  # randomize files
     test_files = []
     nb_test_samples = 0
 
     for file in shuffle_files:
-        if nb_test_samples >= target_test - error_margin:
+        if nb_test_samples >= target_test - error_margin:  # reached target
             break
 
         nb_samples = dataset[file].nb_samples()
@@ -225,8 +288,10 @@ def train_test_split(accent, test=0.15):
             test_files.append(file)
             nb_test_samples += nb_samples
 
+    # assign rest of files to train set
     train_files = [f for f in shuffle_files if f not in test_files]
 
+    # move file to appropriate folder
     for file in test_files:
         for sample, sample_path in dataset[file].get_samples_path():
             new_path = dir_name_assigned[1] + '/' + sample
@@ -245,7 +310,7 @@ if __name__ == "__main__":
     DIR_DATABASE = 'database/'
     DIR_DATASET = 'dataset/'
 
-    DIR_SETS = ['train', 'dev']
+    DIR_SETS = ['train', 'dev']  # names of sets. first is training, second is dev set
 
     with open(DIR_DATABASE + "videos_urls", "r") as f:
         video_dict = json.load(f)
@@ -256,4 +321,4 @@ if __name__ == "__main__":
     for accent in accent_list:
         download_audio(video_dict, accent)
         process_audio(accent, alpha=0.8)
-        train_test_split(accent, test=0.15)
+        train_test_split(accent, test_ratio=0.25)
