@@ -319,4 +319,4 @@ if __name__ == "__main__":
     for accent in accent_list:
         download_audio(video_dict, accent)
         process_audio(accent, alpha=0.8)
-        train_test_split(accent, test_ratio=0.25)
+        train_test_split(accent, test_ratio=0.03)
