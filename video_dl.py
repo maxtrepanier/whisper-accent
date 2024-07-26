@@ -119,7 +119,7 @@ def process_audio(accent: str, min_separation:float = 30, alpha: float = 0.5):
     """ Process audio files for given accent.
     For each file in DIR_DATABASE/accent, selects random segments of
     min_separation (default 30s) from the audio track, and outputs the segments
-    to DIR_DATASET/accent.
+    to DIR_DATASET/DIR_SETS[0]/accent.
 
     Args:
     - accent: name of directory in DIR_DATABASE containing audio files
@@ -135,14 +135,17 @@ def process_audio(accent: str, min_separation:float = 30, alpha: float = 0.5):
     files_database = [f[:-4] for f in os.listdir(dir_name) if f[-4:] == ".mp3"]
     print(f"{accent}: found {len(files_database)} mp3 files in {dir_name}")
 
-    dir_name_out = DIR_DATASET + accent
+    dir_name_out = DIR_DATASET + DIR_SETS[0] + '/' + accent
     if not os.path.exists(dir_name_out):
         os.makedirs(dir_name_out)
 
     files_dataset = [f for f in os.listdir(dir_name_out) if f[-4:] == ".mp3"]
-    for dir_name in DIR_SETS:
-        files_dataset += [f for f in os.listdir(dir_name_out + '/' + dir_name)
-                if f[-4:] == ".mp3"]
+    for dir_name in DIR_SETS[1:]:
+        dir_name_full = DIR_DATASET + dir_name + '/' + accent
+        if not os.path.exists(dir_name_full):
+            os.makedirs(dir_name_full)
+        files_dataset += [f for f in os.listdir(dir_name_full)
+                          if f[-4:] == ".mp3"]
 
     files_dataset = [get_name_from_sample(name) for name in files_dataset]  # strip _i.mp3
 
@@ -231,42 +234,37 @@ def train_test_split(accent, test_ratio: float = 0.15, tol: float = 0.02):
     """ Divides audio samples into train/test with given ratio of test samples.
     """
 
-    # retrieve file list in base + assigned directories
-    dir_name_base = DIR_DATASET + accent
-    dir_name_assigned = [dir_name_base + '/' + d for d in DIR_SETS]
+    # retrieve file list in directories
+    dir_name_assigned = [DIR_DATASET + d + '/' + accent for d in DIR_SETS]
 
     for d in dir_name_assigned:
         if not os.path.exists(d):
             os.makedirs(d)
 
-    files_dataset_base = [f for f in os.listdir(dir_name_base) if f[-4:] == ".mp3"]
     files_dataset_assigned = {d: [f for f in os.listdir(d) if f[-4:] == ".mp3"]
                               for d in dir_name_assigned}
 
 
     nb_files_assigned = {d: len(files_dataset_assigned[d]) for d in files_dataset_assigned}
-    nb_files_unassigned = len(files_dataset_base)
-    nb_total_files = nb_files_unassigned  + sum(nb_files_assigned.values())
-    print(f"{accent}: found {nb_total_files} mp3 files in {dir_name_base}/:")
-    print(f"  - {nb_files_unassigned} in {dir_name_base}")
+    nb_total_files = sum(nb_files_assigned.values())
+    print(f"{accent}: found {nb_total_files} mp3 files in {DIR_DATASET}./{accent}/:")
     for d in dir_name_assigned:
         print(f"  - {nb_files_assigned[d]} in {d}")
     print("")
 
     # check ratios of test samples
     resplit = False
-    if nb_files_unassigned > 0:
-        resplit = True
-    elif nb_total_files > 0:
+    if nb_total_files > 0:
         # if assigned already, check if within tol of target
         if abs(nb_files_assigned[dir_name_assigned[1]] / nb_total_files -
                 test_ratio) > tol:
             resplit = True
 
     if not resplit:
-        print(f"Train-test split already done, within {tol*100}% of target {test}. Nothing to do.\n")
+        print(f"Train-test split already done, within {tol*100}% of target {test_ratio}. Nothing to do.\n")
+        return
 
-    dataset = get_dataset_dict(dir_name_base, files_dataset_base)
+    dataset = {}
     # merge assigned file to dataset
     for d in dir_name_assigned:
         dataset = dataset | get_dataset_dict(d, files_dataset_assigned[d])
